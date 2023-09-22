@@ -24,12 +24,12 @@ function Navigation() {
                         <img src={logo} alt="logo" className="w-7 h-7" onClick={() => navigate('/')} />
                         <h2 className='text-lg text-white'>Lemmy.world</h2>
                     </div>
-                    <div className='md:w-100'>
-                        <IoMenu className={`my-auto text-xl text-zinc-400     active:rounded-md border-zinc-300 md:hidden duration-300`} onClick={menu} />
+                    <div className=''>
+                        <IoMenu className={`my-auto text-xl text-zinc-400 focus:ring-zinc-300 md:hidden duration-300`} onClick={menu} />
 
                     </div>
                 </nav>
-                <ul className={`h-0 overflow-hidden text-zinc-400 leading-10 relative w-full left-4 transition-all ease-in-out duration-300 md:w-100 md:text-sm md:relative md:flex md:justify-between md:mx-4 md:my-auto md:pr-9 md:translate-x-0 md:duration-0 ${toggled == true ? "opacity-100  h-auto duration-300" : "opacity-0 duration-300"}`}>
+                <ul className={`h-0 overflow-hidden text-zinc-400 leading-10 relative w-full left-4 transition-all ease-in-out duration-300  md:text-sm md:relative md:flex md:justify-between md:mx-4 md:my-auto md:pr-9 md:translate-x-0 md:duration-0 ${toggled == true ? "opacity-100  h-auto duration-300" : "opacity-0 duration-300"}`}>
                     <div className='top-0 md:flex md:gap-3'>
                         <li className='hover:text-white duration-300'>Communities</li>
                         <li className='hover:text-white duration-300'>Create Post</li>
