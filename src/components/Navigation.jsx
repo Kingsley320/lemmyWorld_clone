@@ -1,7 +1,7 @@
 import logo from '../assets/lemmyRat.webp'
 import { IoHeartOutline, IoMenu, IoSearchOutline } from "react-icons/io5";
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import { useMediaQuery } from '@uidotdev/usehooks'
 
 function Navigation() {
@@ -29,7 +29,7 @@ function Navigation() {
 
                     </div>
                 </nav>
-                <ul className={`h-0 overflow-hidden text-zinc-400 leading-10 relative w-full left-4 transition-all ease-in-out duration-300  md:text-sm md:relative md:flex md:justify-between md:mx-4 md:my-auto md:pr-9 md:translate-x-0 md:duration-0 ${toggled == true ? "opacity-100  h-auto duration-300" : "opacity-0 duration-300"}`}>
+                <ul className={`h-0 overflow-hidden text-zinc-400 leading-10 relative w-full left-4 transition-all ease-in-out duration-300  md:text-sm md:relative md:flex md:justify-between md:mx-4 md:my-auto md:pr-9 md:translate-x-0 md:duration-0 ${toggled == true ? "opacity-100  h-auto " : "opacity-0 h-0"}`}>
                     <div className='top-0 md:flex md:gap-3'>
                         <li className='hover:text-white duration-300'>Communities</li>
                         <li className='hover:text-white duration-300'>Create Post</li>
@@ -39,8 +39,12 @@ function Navigation() {
                     <div className='md:flex md:gap-4'>
                         <li className="flex gap-1 hover:text-white duration-300 "><IoSearchOutline className="my-auto " /> <p className='md:hidden '>Search</p></li>
                         {/* When session storage fetch is successful, hide these later */}
-                        <li className='hover:text-white '>Login</li>
-                        <li className='hover:text-white '>Sign Up</li>
+                        <Link to={`${sessionStorage.getItem('lemmyIsLogged') != null ? '/login' : '/signup'}`}>
+                            <li className='hover:text-white '>Login</li>
+                        </Link>
+                        <Link to='/signup'>
+                            <li className='hover:text-white '>Sign Up</li>
+                        </Link>
                     </div>
                 </ul>
             </div>
