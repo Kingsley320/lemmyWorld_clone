@@ -3,7 +3,7 @@ import Navigation from "../components/Navigation"
 import SignUpForm from "../components/SignUpForm"
 import SignUpNotice from "../components/SignUpNotice"
 
-function HomePage() {
+function SignUp() {
 
     return (
         <div className="w-full  ">
@@ -14,4 +14,4 @@ function HomePage() {
         </div>
     )
 }
-export default HomePage
+export default SignUp

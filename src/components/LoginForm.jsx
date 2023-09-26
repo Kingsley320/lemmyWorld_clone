@@ -1,7 +1,10 @@
 import { createRef, useState } from "react"
 import { BsExclamationCircle, BsCheckLg } from "react-icons/bs";
+import { useNavigate } from "react-router-dom";
 
-export default function SignUpForm() {
+export default function LoginForm() {
+    const navigate = useNavigate()
+    const [loggedIn, setIsLoggedIn] = useState(false)
     const [err, setErr] = useState(false)
     // const [isvalid, setIsvalid] = useState(true)
     // const [username, setUsername] = useState('')
@@ -26,6 +29,13 @@ export default function SignUpForm() {
             password: password
         };
         console.log(user);
+        setIsLoggedIn(true)
+        setTimeout(()=>{
+            setIsLoggedIn(false)
+            sessionStorage.setItem('lemmyIsLogged', JSON.stringify(user))
+            navigate('/')
+        }, 3000)
+        
     }
     return (
         <div className="lg:max-w-xl mx-auto px-3 flex flex-wrap justify-start">
@@ -82,6 +92,12 @@ export default function SignUpForm() {
                 </div>
                 <button className={`bg-blue-200/80 px-2 py-1 text-black rounded-md hover:bg-blue-200/90 duration-300 ${err === true ? 'pointer-events-none' : null}`} onClick={handleSubmit}>Login</button>
             </form>
+
+            {
+                loggedIn && <div className="absolute  bottom-4 left-5  duration-300 ">
+                    <p className="w-full pt-3 text-center my-auto text-white font-semi-bold bg-green-500 px-4 h-12 drop-shadow-[0_10px_10px_rgba(29,78,216,0.5)] shadow-blue-400 ">Logged In.</p>
+                </div>
+            }
         </div>
     )
 }

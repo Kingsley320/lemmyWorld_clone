@@ -1,17 +1,15 @@
 import Footer from "../components/Footer"
+import LoginForm from "../components/LoginForm"
 import Navigation from "../components/Navigation"
-import Login from '../components/Login'
-import LoggedInModal from "../components/LoggedInModal"
 
-function HomePage() {
+function Login() {
 
     return (
         <div className="w-full  ">
             <Navigation />
-            <Login />
-            <LoggedInModal />
+            <LoginForm />
             <Footer />
         </div>
     )
 }
-export default HomePage
+export default Login

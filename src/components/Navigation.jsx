@@ -3,6 +3,7 @@ import { IoHeartOutline, IoMenu, IoSearchOutline } from "react-icons/io5";
 import { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom'
 import { useMediaQuery } from '@uidotdev/usehooks'
+import { BsBell } from 'react-icons/bs';
 
 function Navigation() {
     const [toggled, setToggled] = useState(false)
@@ -24,7 +25,10 @@ function Navigation() {
                         <img src={logo} alt="logo" className="w-7 h-7" onClick={() => navigate('/')} />
                         <h2 className='text-lg text-white'>Lemmy.world</h2>
                     </div>
-                    <div className=''>
+                    <div className='flex gap-2'>
+                        {
+                            sessionStorage.getItem('lemmyIsLogged') && <BsBell className="my-auto text-md"/>
+                        }
                         <IoMenu className={`my-auto text-xl text-zinc-400 focus:ring-zinc-300 md:hidden duration-300`} onClick={menu} />
 
                     </div>
@@ -39,7 +43,8 @@ function Navigation() {
                     <div className='md:flex md:gap-4'>
                         <li className="flex gap-1 hover:text-white duration-300 "><IoSearchOutline className="my-auto " /> <p className='md:hidden '>Search</p></li>
                         {/* When session storage fetch is successful, hide these later */}
-                        <Link to={`${sessionStorage.getItem('lemmyIsLogged') != null ? '/login' : '/signup'}`}>
+                        {/* <Link to={`${sessionStorage.getItem('lemmyIsLogged') != null ? '/login' : '/signup'}`}> */}
+                        <Link to={`/login`}>
                             <li className='hover:text-white '>Login</li>
                         </Link>
                         <Link to='/signup'>
