@@ -38,7 +38,8 @@ export default function LoginForm() {
         
     }
     return (
-        <div className="lg:max-w-xl mx-auto px-3 flex flex-wrap justify-start">
+       <div className="min-h-[50vh] md:min-h-[95vh]">
+         <div className="lg:max-w-xl mx-auto px-3 flex flex-wrap justify-start">
             <h2 className=" text-xl font-semibold my-2">Login</h2>
             <form className="w-full my-5 flex flex-wrap gap-3" action="POST">
                 {/* <div className="w-full md:grid md:grid-cols-12 ">
@@ -99,5 +100,6 @@ export default function LoginForm() {
                 </div>
             }
         </div>
+       </div>
     )
 }
