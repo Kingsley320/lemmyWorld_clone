@@ -1,13 +1,17 @@
+import axios from "axios";
 import { createRef, useState } from "react"
 import { BsExclamationCircle, BsCheckLg } from "react-icons/bs";
+import { useNavigate } from "react-router-dom";
 
 export default function SignUpForm() {
     const [err, setErr] = useState(false)
-    // const [isvalid, setIsvalid] = useState(true)
+    const [isverified, setVerified] = useState(true)
     const [username, setUsername] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [verifypassword, setVerifypassword] = useState('')
+    const [loggedIn, setIsLoggedIn] = useState(false)
+    const navigate = useNavigate()
     const invalid = 'border-red-500 outline-none outline-offset-0 required:border-red-500 focus:outline-4 focus:outline-red-500/30 focus:border-red-500';
     const valid = 'border-green-500 outline-none outline-offset-0 requigreen:border-green-500 focus:outline-4 focus:outline-green-500/30 focus:border-green-500';
 
@@ -22,23 +26,37 @@ export default function SignUpForm() {
             email: email,
             password: password
         };
-        console.log(user);
-        if (user.password !== verifypassword) {
-            console.log("Passwords must match");
-            return;
+        // let bank = {
+        //     name:"clev bank", 
+        //     type:"commercial bank", 
+        //     logo: "", 
+        //     email:"clevbank@agents.co", 
+        //     social_media:{facebook: "clev_bank", instagram: "", tiktok: "", x: "",}
+        // };
+        // console.log(bank);
+
+        // try{
+        //     let resp = await axios.post('http://localhost:5000/create-finance', bank);
+        //     // console.log('e go!!!!!!!!!!!!')
+        //     console.log(resp)
+        // }
+        // catch(e){
+        //     console.log(e.message)
+        // }
+        try {
+            let resp = await axios.post('http://localhost:5001/users', user)
+            if (resp) {
+                console.log(resp.data)
+                setIsLoggedIn(true)
+                setTimeout(() => {
+                    navigate('/login')
+
+                }, 3000);
+            }
+        } catch (error) {
+            console.log(error)
         }
-        console.log("password: " + user.password);
     }
-
-    // const handleInput = (e) => {
-    //     if (e.target.value.length < 5) {
-    //         setIsvalid(false)
-    //     }
-    //     else {
-
-    //         setIsvalid(true)
-    //     }
-    // }
 
     return (
         <div className="min-h-[55vh] md:min-h-[95vh]">
@@ -105,24 +123,21 @@ export default function SignUpForm() {
                             `}
                                 value={verifypassword}
                                 onChange={(e) => { setVerifypassword(e.target.value) }}
+                                onBlur={(e) => { verifypassword !== password ? setVerified(false) : setVerified(true) }}
                             />
                             {(err === true && verifypassword === '' || verifypassword.length < 8) ?
                                 <BsExclamationCircle className="absolute my-auto text-red-500  right-4 top-[25%] md:top-[15%]" /> : <BsCheckLg className="absolute my-auto text-green-500  right-4 top-[30%] md:top-[15%]" />}
                         </div>
+                        <span className={`text-red-500 ${isverified ? 'invisible' : ''}`}>Must match first password</span>
                     </div>
                     <button className="bg-blue-200/80 px-2 py-1 text-black rounded-md hover:bg-blue-200/90 duration-300" onClick={handleSubmit}>Sign Up</button>
                 </form>
-                {/* 
-            <form>
-                <label class="block">
-                    <span class="block text-sm font-medium text-slate-700">Email</span>
-                    <input type="email" class="peer ..." />
-                    <p class="mt-2 invisible peer-invalid:visible text-pink-600 text-sm">
-                        Please provide a valid email address.
-                    </p>
-                </label>
-            </form> 
-            */}
+
+                {
+                    loggedIn && <div className="absolute  bottom-4 left-5  duration-300 ">
+                        <p className="w-full pt-3 text-center my-auto text-white font-semi-bold bg-green-500 px-4 h-12 drop-shadow-[0_10px_10px_rgba(29,78,216,0.5)] shadow-blue-400 ">Successful.</p>
+                    </div>
+                }
             </div>
         </div>
 
