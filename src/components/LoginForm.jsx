@@ -30,15 +30,15 @@ export default function LoginForm() {
             password: password
         };
         try {
-            let resp = await axios.get('http://localhost:5001/users')
-            if (resp){
-                console.log(resp)
-            setIsLoggedIn(true)
-            setTimeout(() => {
-                setIsLoggedIn(false)
-                // sessionStorage.setItem('lemmyIsLogged', JSON.stringify(user))
-                // navigate('/')
-            }, 3000)
+            let resp = await axios.post('http://localhost:5001/login', user)
+            console.log(resp)
+            if (resp.data) {
+                setIsLoggedIn(true)
+                setTimeout(() => {
+                    setIsLoggedIn(false)
+                    sessionStorage.setItem('lemmyIsLogged', JSON.stringify(resp.data))
+                    navigate('/')
+                }, 3000)
             }
         }
         catch (e) {
