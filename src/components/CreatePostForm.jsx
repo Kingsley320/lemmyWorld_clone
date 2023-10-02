@@ -21,7 +21,8 @@ export default function CreatePostForm() {
         // }
         let post = {
             url: url,
-            image: image,
+            // image: image,
+            image: "https://reworkacademy.co/static/media/logo.fa8fb2ae66c704a90720.png",
             title: title,
             body: body,
             language: language,
@@ -39,35 +40,37 @@ export default function CreatePostForm() {
     }
 
     // blob stuff
+    // Thus is needed
+    // const handleImage = async (e) => {
+    //     let image = e.target.files[0]
+    //     if (image) {
+    //         const imageUrl = URL.createObjectURL(image)
+    //         // const useImage = setImageFile(image)
+    //         // console.log(useImage);
+    //         // setImage(imageUrl)
+    //         console.log(imageUrl);
+    //         console.log(image)
+    //         // setImage(image)
 
-    const handleImage = async (e) => {
-        let image = e.target.files[0]
-        if (image) {
-            const imageUrl = URL.createObjectURL(image)
-            // const useImage = setImageFile(image)
-            // console.log(useImage);
-            // setImage(imageUrl)
-            console.log(imageUrl);
-            console.log(image)
-            // setImage(image)
+    //         // try {
+    //         //     // let resp = await axios.get(imageUrl)
 
-            // try {
-            //     // let resp = await axios.get(imageUrl)
+    //         //     const fr = new FileReader();
+    //         //     fr.readAsDataURL(imageUrl);
+    //         //     fr.onloadend = () => {
+    //         //         const resp = fr.result;
+    //         //         console.log(resp);
+    //         //     }
+    //         // } catch (error) {
+    //         //     console.log(error)
+    //         // }
+    //         // // fileReader(resp.blob())
 
-            //     const fr = new FileReader();
-            //     fr.readAsDataURL(imageUrl);
-            //     fr.onloadend = () => {
-            //         const resp = fr.result;
-            //         console.log(resp);
-            //     }
-            // } catch (error) {
-            //     console.log(error)
-            // }
-            // // fileReader(resp.blob())
+    //     }
 
-        }
+    // }
 
-    }
+    // Not needed yet
     // const fileReader = (input) => {
     //     const fr = new FileReader();
     //     fr.readAsDataURL(input);
@@ -172,7 +175,9 @@ export default function CreatePostForm() {
                     </div>
 
                     <div className="">
-                        <button type="submit" className={`bg-neutral-500 px-2 py-1 text-black rounded-md hover:bg-neutral-400/90 duration-300 ${url === '' || image === '' || title === '' || body === '' || language === '' || community === '' ? 'pointer-events-none' : ''}`} onClick={handleSubmit}>Create</button>
+                        <button type="submit" className={`bg-neutral-500 px-2 py-1 text-black rounded-md hover:bg-neutral-400/90 duration-300 ${url === '' || 
+                        // image === '' || 
+                        title === '' || body === '' || language === '' || community === '' ? 'pointer-events-none' : ''}`} onClick={handleSubmit}>Create</button>
                     </div>
                     {/* <input type="submit" /> */}
                 </form>
