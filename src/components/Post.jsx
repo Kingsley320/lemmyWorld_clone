@@ -26,8 +26,8 @@ export default function Post(props) {
                             </h2>
                             <small className='active:text-white hover:text-white'>{props.url}</small>
                         </div>
-                        <div className=' col-start-10 col-end-13 relative'>
-                            <img src={props.image} alt="post image" className=' h-24 p-1 rounded-xl' />
+                        <div className='h-24 col-start-10 col-end-13 relative'>
+                            <img src={props.image} alt="post image" className=' h-full p-1 rounded-xl' />
                             <BsBoxArrowUpRight className="absolute top-1 right-1 bg-gray-400 text-xl hover:bg-gray-500" />
                         </div>
                     </div>
