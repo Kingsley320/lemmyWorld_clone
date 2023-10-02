@@ -29,7 +29,7 @@ export default function () {
             <Navigation />
             {
                 posts.length > 0 ? (
-                    posts.map(post => (<Link><Feed key={post._id} title={post.title} url={post.url} language={post.language} image={post.image} community={post.community}/></Link>))
+                    posts.map(post => (<Link to={`${post._id}`}><Feed key={post._id} title={post.title} url={post.url} language={post.language} image={post.image} community={post.community} /></Link>))
                 ) :
                     (
                         <div className="w-full h-40 flex justify-middle align-middle">

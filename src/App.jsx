@@ -19,6 +19,7 @@ function App() {
           <Route path="/login" element={<Login/>}/>
           <Route path="/create-post" element={<CreatePost/>}/>
           <Route path="/feed" element={<FeedPage/>}/>
+          <Route path="/feed/:id" element={<FeedPage/>}/>
         </Routes>
       </BrowserRouter>
       
