@@ -6,6 +6,7 @@ import SignUp from './Pages/SignUp'
 import Login from './Pages/LogIn'
 import HomePage from './Pages/HomePage'
 import CreatePost from './Pages/CreatePost'
+import FeedPage from './Pages/FeedPage'
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
           <Route path="/signup" element={<SignUp/>}/>
           <Route path="/login" element={<Login/>}/>
           <Route path="/create-post" element={<CreatePost/>}/>
+          <Route path="/feed" element={<FeedPage/>}/>
         </Routes>
       </BrowserRouter>
       
