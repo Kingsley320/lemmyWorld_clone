@@ -6,7 +6,8 @@ import SignUp from './Pages/SignUp'
 import Login from './Pages/LogIn'
 import HomePage from './Pages/HomePage'
 import CreatePost from './Pages/CreatePost'
-import FeedPage from './Pages/FeedPage'
+import FeedPage from './Pages/PostsPage'
+import SinglePost from './components/SinglePost'
 
 function App() {
 
@@ -19,7 +20,7 @@ function App() {
           <Route path="/login" element={<Login/>}/>
           <Route path="/create-post" element={<CreatePost/>}/>
           <Route path="/feed" element={<FeedPage/>}/>
-          <Route path="/feed/:id" element={<FeedPage/>}/>
+          <Route path="/feed/:id" element={<SinglePost/>}/>
         </Routes>
       </BrowserRouter>
       
