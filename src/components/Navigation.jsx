@@ -33,7 +33,7 @@ function Navigation() {
 
                     </div>
                 </nav>
-                <ul className={`h-0 overflow-hidden text-zinc-400 leading-10 relative w-full left-4 transition-all ease-in-out duration-300  md:text-sm md:relative md:flex md:justify-between md:mx-4 md:my-auto  md:translate-x-0 md:duration-0 ${toggled == true ? "opacity-100  h-auto " : "opacity-0 h-0"}`}>
+                <ul className={`h-0 overflow-hidden text-zinc-400 leading-10 relative w-full  transition-all ease-in-out duration-300 md:left-4 md:text-sm md:relative md:flex md:justify-between md:mx-4 md:my-auto  md:translate-x-0 md:duration-0 ${toggled == true ? "opacity-100  h-auto " : "opacity-0 h-0"}`}>
                     <div className='top-0 md:flex md:gap-3'>
                         <li className='hover:text-white duration-300'>Communities</li>
                         <Link to={'/create-post'}><li className='hover:text-white duration-300'>Create Post</li></Link>

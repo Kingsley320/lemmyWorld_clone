@@ -12,6 +12,7 @@ export default function CreatePostForm() {
     const [body, setBody] = useState('')
     const [language, setLanguage] = useState('')
     const [community, setCommunity] = useState('')
+    const [created, setCreated] = useState(false)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -33,6 +34,7 @@ export default function CreatePostForm() {
         try {
             let resp = await axios.post("http://localhost:5001/create-post", post)
             console.log(resp.data)
+            setCreated(true)
         }
         catch (error) {
             console.log(error)
@@ -134,7 +136,7 @@ export default function CreatePostForm() {
                             <textarea
                                 type="text"
                                 placeholder=" "
-                                className={`w-full h-16 px-3 duration-300 rounded-b-md  outline-none outline-offset-0 requigreen:border-green-500 focus:outline-4 focus:outline-green-500/30`}
+                                className={`w-full h-16 px-3 duration-300 rounded-b-md  outline-none outline-offset-0 focus:outline-4 focus:outline-green-500/30`}
                                 value={body}
                                 onChange={(e) => { setBody(e.target.value) }}
                             />
