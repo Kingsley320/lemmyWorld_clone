@@ -30,9 +30,10 @@ export default function CreatePostForm() {
             community: community
 
         };
-        console.log(post);
+        // console.log(post);
         try {
-            let resp = await axios.post("http://localhost:5001/create-post", post)
+            console.log("attempting to post")
+            let resp = await axios.post("http://localhost:5001/api/v1/create-post", post)
             console.log(resp.data)
             setCreated(true)
         }

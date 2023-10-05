@@ -26,25 +26,9 @@ export default function SignUpForm() {
             email: email,
             password: password
         };
-        // let bank = {
-        //     name:"clev bank", 
-        //     type:"commercial bank", 
-        //     logo: "", 
-        //     email:"clevbank@agents.co", 
-        //     social_media:{facebook: "clev_bank", instagram: "", tiktok: "", x: "",}
-        // };
-        // console.log(bank);
 
-        // try{
-        //     let resp = await axios.post('http://localhost:5000/create-finance', bank);
-        //     // console.log('e go!!!!!!!!!!!!')
-        //     console.log(resp)
-        // }
-        // catch(e){
-        //     console.log(e.message)
-        // }
         try {
-            let resp = await axios.post('http://localhost:5001/users', user)
+            let resp = await axios.post('http://localhost:5001/api/v1/users', user)
             if (resp) {
                 console.log(resp.data)
                 setIsLoggedIn(true)

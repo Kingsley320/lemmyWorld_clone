@@ -11,11 +11,11 @@ import Post from '../components/Post';
 export default function PostsPage() {
     const [posts, setPosts] = useState([]);
 
-    const handleFeed = async () => {
+    const handlePosts = async () => {
         try {
-            const resp = await axios.get('http://localhost:5001/feed')
+            const resp = await axios.get('http://localhost:5001/api/v1/feed')
             setPosts(resp.data)
-            // console.log(resp.data)
+            console.log(resp.data)
             // console.log(posts)
         } catch (error) {
             console.log(error)
@@ -23,7 +23,7 @@ export default function PostsPage() {
     }
 
     useEffect(() => {
-        handleFeed()
+        handlePosts()
     }, [])
 
     return (
@@ -31,10 +31,10 @@ export default function PostsPage() {
             <Navigation />
             {
                 posts.length > 0 ? (
-                    posts.map(post => (<Link to={`/feed/${post._id}`} key={post._id}><Post title={post.title} url={post.url} language={post.language} image={post.image} community={post.community} /></Link>))
+                    posts.map(post => (<Link to={`/feed/${post._id}`} key={post._id}><Post title={post.title} url={post.url} language={post.language} image={post.image} community={post.community} dateCreated={Math.ceil((Date.now() - (new Date(post.created_at)) ) / (1000 * 60 * 60)) + " hours ago"} /></Link>))
                 ) :
                     (
-                        <div className="w-full h-40 flex justify-middle align-middle">
+                        <div className="min-h-[50vh] w-full h-40 flex justify-middle align-middle">
                             <h2 className="my-auto mx-auto text-3xl font-bold">Loading...</h2>
                         </div>
                     )

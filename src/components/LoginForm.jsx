@@ -30,7 +30,7 @@ export default function LoginForm() {
             password: password
         };
         try {
-            let resp = await axios.post('http://localhost:5001/login', user)
+            let resp = await axios.post('http://localhost:5001/api/v1/login', user)
             console.log(resp)
             if (resp.data) {
                 setIsLoggedIn(true)
