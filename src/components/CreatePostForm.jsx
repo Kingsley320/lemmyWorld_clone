@@ -21,6 +21,7 @@ export default function CreatePostForm() {
         //     return;
         // }
         let post = {
+            user_id: JSON.parse(sessionStorage.getItem('lemmyIsLogged'))._id,
             url: url,
             // image: image,
             image: "https://reworkacademy.co/static/media/logo.fa8fb2ae66c704a90720.png",
@@ -32,7 +33,7 @@ export default function CreatePostForm() {
         };
         // console.log(post);
         try {
-            console.log("attempting to post")
+            // console.log("attempting to post")
             let resp = await axios.post("http://localhost:5001/api/v1/create-post", post)
             console.log(resp.data)
             setCreated(true)

@@ -31,11 +31,11 @@ export default function PostsPage() {
             <Navigation />
             {
                 posts.length > 0 ? (
-                    posts.map(post => (<Link to={`/feed/${post._id}`} key={post._id}><Post title={post.title} url={post.url} language={post.language} image={post.image} community={post.community} dateCreated={Math.ceil((Date.now() - (new Date(post.created_at)) ) / (1000 * 60 * 60)) + " hours ago"} /></Link>))
+                    posts.map(post => (<Link to={`/feed/${post._id}`} key={post._id}><Post username={post.username} title={post.title} url={post.url} language={post.language} image={post.image} community={post.community} dateCreated={Math.ceil((Date.now() - (new Date(post.created_at)) ) / (1000 * 60 * 60)) + " hours ago"} /></Link>))
                 ) :
                     (
                         <div className="min-h-[50vh] w-full h-40 flex justify-middle align-middle">
-                            <h2 className="my-auto mx-auto text-3xl font-bold">Loading...</h2>
+                            <h2 className="my-auto mx-auto text-3xl font-bold">Nothing yet...</h2>
                         </div>
                     )
             }

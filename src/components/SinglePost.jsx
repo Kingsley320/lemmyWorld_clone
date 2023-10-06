@@ -16,20 +16,36 @@ export default function SinglePost() {
     const { id } = useParams();
     const [post, setPost] = useState({})
     const [comment, setComment] = useState('')
+    const [commentsec, setCommentSec] = useState('')
+    const [loading, setLoading] = useState(true)
     let [likes, setLikes] = useState(0)
+    let [commented, setCommented] = useState(false)
     let [err, setErr] = useState(false)
 
     const loadSinglePost = async () => {
         try {
             const resp = await axios.get(`http://localhost:5001/api/v1/feed/:${id}`)
-            if (resp) {
+            if (resp.data) {
                 setPost(resp.data)
-                console.log(post);
+                console.log(resp.data);
+                setLoading(false)
             }
         } catch (error) {
             console.log(error)
         }
     }
+
+    // const loadComments = async () => {
+    //     try {
+    //         const comments = await axios.get(`http://localhost:5001/api/v1/feed/:${id}/comment`)
+    //         if (comments.data){
+    //             setCommentSec(comments.data)
+    //             console.log(comments.data)
+    //         }   
+    //     } catch (error) {
+    //         console.log(error)
+    //     }
+    // }
 
     const handleLike = (e) => {
         console.log(e.target)
@@ -38,43 +54,52 @@ export default function SinglePost() {
     }
 
     const handleComment = async () => {
-        if (comment === ''){
+        if (comment === '') {
             setErr(true);
             return
-        }      
-        const aComment = {
-            comment: comment
         }
-        try{
-            let resp = await axios.get('http://localhost:5001/api/v1/feed/:${id}/comment')
-            if(resp){
+        const aComment = {
+            user_id: JSON.parse(sessionStorage.getItem('lemmyIsLogged'))._id,
+            body: comment
+        }
+        try {
+            console.log(aComment)
+            let resp = await axios.post(`http://localhost:5001/api/v1/feed/:${id}/comment`, aComment)
+            // if (resp) {
                 console.log(resp)
-            }
-        }catch(e){
+                setCommented(true)
+                setTimeout(() => {
+                    setCommented(false)
+                    setComment("")
+                    loadSinglePost()
+                }, 3000)
+            // }
+        } catch (e) {
             console.log(e)
         }
     }
 
     useEffect(() => {
         loadSinglePost()
+        // loadComments()
     }, []);
 
     return (
         <div>
             <Navigation />
             {/* Post */
-                post ? (
+                !loading && post ? (
                     <div className="mx-2 ">
                         <div className='h-auto my-2 pb-4 border-b-[0.3px] border-neutral-700'>
                             <div className='w-full mb-1 '>
                                 <div className='w-full flex gap-1'>
                                     <img src={defaultLogo} alt="userlogo" className='w-5 h-5' />
-                                    <small className='text-sky-500'>{"@Kingsley"}</small>
+                                    <small className='text-sky-500'>{post.user_id.username || "@Kingsley"}</small>
                                     <small> to </small>
                                     <img src={defaultLogo} alt="category logo" className='w-5 h-5' />
-                                    <small className='text-emerald-300'>{"Technology"}</small>
-                                    <small className="capitalize my-auto bg-neutral-700 rounded-md px-1 ">{'English'}</small>
-                                    <small className="capitalize flex "><BsDot className='text-lg font-bold' />{Math.ceil((Date.now() - (new Date(post.created_at)) ) / (1000 * 60 * 60)) } hours ago</small>
+                                    <small className='text-emerald-300'>{post.community || "Technology"}</small>
+                                    <small className="capitalize my-auto bg-neutral-700 rounded-md px-1 ">{post.language}</small>
+                                    <small className="capitalize flex "><BsDot className='text-lg font-bold' />{Math.ceil((Date.now() - (new Date(post.created_at))) / (1000 * 60 * 60))} {"hour(s) ago"}</small>
                                 </div>
                             </div>
                             <div className='w-full'>
@@ -93,9 +118,10 @@ export default function SinglePost() {
                             </div>
                             <div className="w-full text-zinc-500 text-lg font-semibold ">
                                 <div className="w-full pl-2 my-2 flex flex-wrap gap-4 justify-start ">
-                                    <span className='flex gap-2 my-auto'><BsChatLeft className='my-auto h-auto w-3 text-neutral-500' /> <small>{'34'}</small></span>
+                                    <span className='flex gap-2 my-auto'><BsChatLeft className='my-auto h-auto w-3 text-neutral-500' /> <small>{post.comment_id.length}</small></span>
                                     <span className='my-auto font-bold'>< BsShareFill className='h-auto w-3 font-bold' /></span>
-                                    <span className='flex ' onClick={() => { likes < 1 ? setLikes(true) : setLikes(!likes); console.log(likes)
+                                    <span className='flex ' onClick={() => {
+                                        likes < 1 ? setLikes(true) : setLikes(!likes); console.log(likes)
                                     }}><BsArrowUpShort className='my-auto text-xl ' /> <small>{post.likes || likes}</small></span>
                                     <span className='flex '><BsArrowDownShort className='my-auto text-xl' /> <small>{'10'}</small></span>
                                     <span className='my-auto'><BsStar className='h-auto w-3 ' /></span>
@@ -134,7 +160,18 @@ export default function SinglePost() {
 
                         </div>
                         <div>
-                            <Comment />
+                            {
+                                post ? (
+                                    post.comment_id.map((comment) => (
+                                        <Comment key={comment._id}  body={comment.body} created={`${Math.ceil((Date.now() - (new Date(comment.created_at))) / (3600000)) } hour(s) ago` }/>
+
+                                    ))
+                                ) 
+                                :
+                                    (
+                                        <Comment user={JSON.parse(sessionStorage.getItem('lemmyIsLogged')).username} body={"Be the first to comment"} />
+                                )
+                            }
                         </div>
                     </div>
                 ) :
@@ -143,6 +180,11 @@ export default function SinglePost() {
                             <h2 className="my-auto mx-auto text-3xl font-bold">Loading...</h2>
                         </div>
                     )
+            }
+            {
+                commented && <div className="absolute  bottom-4 left-5  duration-300 ">
+                    <p className="w-full pt-3 text-center my-auto text-white font-semi-bold bg-green-500 px-4 h-12 drop-shadow-[0_10px_10px_rgba(29,78,216,0.5)] shadow-blue-400 ">Comment Sent.</p>
+                </div>
             }
             <Footer />
         </div>

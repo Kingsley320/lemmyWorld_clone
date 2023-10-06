@@ -11,20 +11,20 @@ export default function Comment(props) {
                     <BsLink45Deg className="my-auto" />
                 </div>
                 <div className="flex gap-1">
-                    {props.likes || '12'} <BsDot className="my-auto" />
+                    {props.likes || '0'} <BsDot className="my-auto" />
                     <BsPencil className="my-auto" />
-                    {props.created || "some day"}
+                    {props.created || "some time ago"}
                 </div>
             </div>
             <div className="my-3 mx-1">
-                <p>{props.body || 'some sample text from the comment component to test the width of the page'}</p>
+                <p>{props.body || 'Be the first to comment'}</p>
             </div>
             <div className="mx-2 flex justify-between text-neutral-400">
                 <div className="flex gap-2">
-                    <BsArrowUpShort className="my-auto"/><small>{"23"}</small>
+                    <BsArrowUpShort className="my-auto"/><small>{props.likes || "0"}</small>
                 </div>
                 <div className="flex gap-2">
-                    <BsArrowDownShort className="my-auto"/><small>{"23"}</small>
+                    <BsArrowDownShort className="my-auto"/><small>{props.dislikes || "0"}</small>
                 </div>
                 <div>
                     <BsReplyFill className="my-auto"/>

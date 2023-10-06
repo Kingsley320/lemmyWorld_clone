@@ -6,8 +6,9 @@ import SignUp from './Pages/SignUp'
 import Login from './Pages/LogIn'
 import HomePage from './Pages/HomePage'
 import CreatePost from './Pages/CreatePost'
-import FeedPage from './Pages/PostsPage'
+import PostsPage from './Pages/PostsPage'
 import SinglePost from './components/SinglePost'
+import Dashboard from './admin/Pages/Dashboard'
 
 function App() {
 
@@ -15,12 +16,14 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<FeedPage/>}/>
+          <Route path="/" element={<HomePage/>}/>
           <Route path="/signup" element={<SignUp/>}/>
           <Route path="/login" element={<Login/>}/>
           <Route path="/create-post" element={<CreatePost/>}/>
-          <Route path="/feed" element={<FeedPage/>}/>
+          <Route path="/feed" element={<PostsPage/>}/>
           <Route path="/feed/:id" element={<SinglePost/>}/>
+
+          <Route path='/admin' element={<Dashboard/>}/>
         </Routes>
       </BrowserRouter>
       
