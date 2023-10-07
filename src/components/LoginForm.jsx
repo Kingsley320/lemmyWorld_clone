@@ -11,33 +11,38 @@ export default function LoginForm() {
     // const [username, setUsername] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [hasAuth, setAuth] = useState(false)
+    const [noAuth, setAuth] = useState(false)
     const invalid = 'border-red-500 outline-none outline-offset-0 required:border-red-500 focus:outline-4 focus:outline-red-500/30 focus:border-red-500';
     const valid = 'border-green-500 outline-none outline-offset-0 requigreen:border-green-500 focus:outline-4 focus:outline-green-500/30 focus:border-green-500';
 
     const handleSubmit = async (e) => {
         e.preventDefault()
         if (
-            // username === '' || username.length < 5 ||
             email === '' || email.length < 5 ||
             password === '' || password.length < 8) {
             setErr(true);
             return;
         }
         let user = {
-            // username: username,
             email: email,
             password: password
         };
         try {
             let resp = await axios.post('http://localhost:5001/api/v1/login', user)
             console.log(resp)
-            if (resp.data) {
+            if (resp.data.username) {
                 setIsLoggedIn(true)
                 setTimeout(() => {
                     setIsLoggedIn(false)
                     sessionStorage.setItem('lemmyIsLogged', JSON.stringify(resp.data))
                     navigate('/')
+                }, 3000)
+            }
+            else{
+                setAuth(true)
+                setTimeout(() => {
+                    setAuth(false)
+                    return
                 }, 3000)
             }
         }
@@ -106,6 +111,11 @@ export default function LoginForm() {
                 {
                     loggedIn && <div className="absolute  bottom-4 left-5  duration-300 ">
                         <p className="w-full pt-3 text-center my-auto text-white font-semi-bold bg-green-500 px-4 h-12 drop-shadow-[0_10px_10px_rgba(29,78,216,0.5)] shadow-blue-400 ">Logged In.</p>
+                    </div>
+                }
+                {
+                    noAuth && <div className="absolute  bottom-4 left-5  duration-300 ">
+                        <p className="w-full pt-3 text-center my-auto text-white font-semi-bold bg-red-500 px-4 h-12 drop-shadow-[0_10px_10px_rgba(29,78,216,0.5)] shadow-blue-400 ">Unauthorized.</p>
                     </div>
                 }
             </div>

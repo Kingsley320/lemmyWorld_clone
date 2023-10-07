@@ -123,7 +123,7 @@ export default function SinglePost() {
                                     <span className='flex ' onClick={() => {
                                         likes < 1 ? setLikes(true) : setLikes(!likes); console.log(likes)
                                     }}><BsArrowUpShort className='my-auto text-xl ' /> <small>{post.likes || likes}</small></span>
-                                    <span className='flex '><BsArrowDownShort className='my-auto text-xl' /> <small>{'10'}</small></span>
+                                    <span className='flex '><BsArrowDownShort className='my-auto text-xl' /> <small>{'0'}</small></span>
                                     <span className='my-auto'><BsStar className='h-auto w-3 ' /></span>
                                     <span className='my-auto'><IoCopyOutline className='h-auto w-3 ' /></span>
                                     <span className="flex gap-1 hover:bg-slate-700 my-auto h-auto w-8">
@@ -154,7 +154,7 @@ export default function SinglePost() {
                                 </select>
                                 <div className="flex gap-2 items-end ">
                                     <span className="h-9 bg-neutral-500 px-auto px-2 py-1.5 text-black rounded-md hover:bg-neutral-400/90 duration-300">Preview</span>
-                                    <button type="submit" className={`h-9 bg-neutral-500 px-2 py-1 text-black rounded-md hover:bg-neutral-400/90 duration-300 ${comment === '' ? 'pointer-events-none' : ''}`} onClick={handleComment}>Create</button>
+                                    <button type="submit" className={`h-9 bg-neutral-500 px-2 py-1 text-black rounded-md hover:bg-neutral-400/90 duration-300 ${comment === '' ? 'pointer-events-none' : ''}`} onClick={handleComment}>Comment</button>
                                 </div>
                             </div>
 
@@ -163,7 +163,7 @@ export default function SinglePost() {
                             {
                                 post ? (
                                     post.comment_id.map((comment) => (
-                                        <Comment key={comment._id}  body={comment.body} created={`${Math.ceil((Date.now() - (new Date(comment.created_at))) / (3600000)) } hour(s) ago` }/>
+                                        <Comment key={comment._id}  body={comment.body} created={`${Math.ceil((Date.now() - (new Date(comment.created_at))) / (3600000)) } hour(s) ago` } user={comment.user_id.username}/>
 
                                     ))
                                 ) 
@@ -182,7 +182,7 @@ export default function SinglePost() {
                     )
             }
             {
-                commented && <div className="absolute  bottom-4 left-5  duration-300 ">
+                commented && <div className=" fixed bottom-4 left-5  duration-300 ">
                     <p className="w-full pt-3 text-center my-auto text-white font-semi-bold bg-green-500 px-4 h-12 drop-shadow-[0_10px_10px_rgba(29,78,216,0.5)] shadow-blue-400 ">Comment Sent.</p>
                 </div>
             }
