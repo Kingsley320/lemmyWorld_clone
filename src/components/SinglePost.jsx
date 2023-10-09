@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import Comment from "./Comment"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import axios from "axios";
 import samplePost from '../assets/sample_post_img.webp'
 import defaultLogo from '../assets/defaultLogo.png'
@@ -16,11 +16,13 @@ export default function SinglePost() {
     const { id } = useParams();
     const [post, setPost] = useState({})
     const [comment, setComment] = useState('')
-    const [commentsec, setCommentSec] = useState('')
+    // const [commentsec, setCommentSec] = useState('')
     const [loading, setLoading] = useState(true)
-    let [likes, setLikes] = useState(0)
+    let [likes, setLikes] = useState(false)
+    let [likesNo, setLikesNo] = useState(0)
     let [commented, setCommented] = useState(false)
     let [err, setErr] = useState(false)
+    const navigate = useNavigate()
 
     const loadSinglePost = async () => {
         try {
@@ -47,13 +49,50 @@ export default function SinglePost() {
     //     }
     // }
 
-    const handleLike = (e) => {
-        console.log(e.target)
-        likes < 1 ? setLikes(likes++) : setLikes(0)
-        console.log(likes)
+    const handleLike = async (e) => {
+        setLikes(!likes)
+        const likeBody = {
+            user_id: JSON.parse(sessionStorage.getItem('lemmyIsLogged'))._id,
+            post_id: e.target.id
+        }
+        if (!likes === true) {
+            setLikesNo(likesNo + 1)
+            console.log(likeBody)
+            try {
+                let resp = await axios.post('http://localhost:5001/api/v1/like', likeBody)
+                if (resp) {
+                    console.log(resp)
+                }
+            } catch (error) {
+
+            }
+        } else {
+            setLikesNo(likesNo - 1)
+            //     try {
+            //         let resp = await axios.delete('http://localhost:5001/api/v1/like', likeBody)
+            //         if (resp){
+            //             console.log(resp)
+            //         }
+            //     } catch (error) {
+
+            //     }
+        }
+
+    }
+
+    const loadLikes = async () => {
+        try {
+            
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     const handleComment = async () => {
+        if (!(sessionStorage.getItem('lemmyIsLogged'))) {
+            navigate("/login")
+            return
+        }
         if (comment === '') {
             setErr(true);
             return
@@ -66,13 +105,13 @@ export default function SinglePost() {
             console.log(aComment)
             let resp = await axios.post(`http://localhost:5001/api/v1/feed/:${id}/comment`, aComment)
             // if (resp) {
-                console.log(resp)
-                setCommented(true)
-                setTimeout(() => {
-                    setCommented(false)
-                    setComment("")
-                    loadSinglePost()
-                }, 3000)
+            console.log(resp)
+            setCommented(true)
+            setTimeout(() => {
+                setCommented(false)
+                setComment("")
+                loadSinglePost()
+            }, 3000)
             // }
         } catch (e) {
             console.log(e)
@@ -81,6 +120,7 @@ export default function SinglePost() {
 
     useEffect(() => {
         loadSinglePost()
+        loadLikes()
         // loadComments()
     }, []);
 
@@ -120,9 +160,7 @@ export default function SinglePost() {
                                 <div className="w-full pl-2 my-2 flex flex-wrap gap-4 justify-start ">
                                     <span className='flex gap-2 my-auto'><BsChatLeft className='my-auto h-auto w-3 text-neutral-500' /> <small>{post.comment_id.length}</small></span>
                                     <span className='my-auto font-bold'>< BsShareFill className='h-auto w-3 font-bold' /></span>
-                                    <span className='flex ' onClick={() => {
-                                        likes < 1 ? setLikes(true) : setLikes(!likes); console.log(likes)
-                                    }}><BsArrowUpShort className='my-auto text-xl ' /> <small>{post.likes || likes}</small></span>
+                                    <span className={`flex ${likes ? 'text-sky-400' : ''}`} id={post._id} onClick={(e) => { handleLike(e) }}><BsArrowUpShort className='my-auto text-xl ' id={post._id} /> <small id={post._id}>{post.likes || likesNo}</small ></span>
                                     <span className='flex '><BsArrowDownShort className='my-auto text-xl' /> <small>{'0'}</small></span>
                                     <span className='my-auto'><BsStar className='h-auto w-3 ' /></span>
                                     <span className='my-auto'><IoCopyOutline className='h-auto w-3 ' /></span>
@@ -163,14 +201,14 @@ export default function SinglePost() {
                             {
                                 post ? (
                                     post.comment_id.map((comment) => (
-                                        <Comment key={comment._id}  body={comment.body} created={`${Math.ceil((Date.now() - (new Date(comment.created_at))) / (3600000)) } hour(s) ago` } user={comment.user_id.username}/>
+                                        <Comment key={comment._id} body={comment.body} created={`${Math.ceil((Date.now() - (new Date(comment.created_at))) / (3600000))} hour(s) ago`} user={comment.user_id.username} />
 
                                     ))
-                                ) 
-                                :
+                                )
+                                    :
                                     (
                                         <Comment user={JSON.parse(sessionStorage.getItem('lemmyIsLogged')).username} body={"Be the first to comment"} />
-                                )
+                                    )
                             }
                         </div>
                     </div>

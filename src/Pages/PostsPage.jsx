@@ -1,11 +1,9 @@
 
-import Feed from '../components/Feed'
 import Footer from '../components/Footer'
 import Navigation from '../components/Navigation'
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from 'react-router-dom';
-import SinglePost from '../components/SinglePost';
 import Post from '../components/Post';
 
 export default function PostsPage() {
@@ -30,8 +28,8 @@ export default function PostsPage() {
         <div className="min-h-screen">
             <Navigation />
             {
-                posts.length > 0 ? (
-                    posts.map(post => (<Link to={`/feed/${post._id}`} key={post._id}><Post username={post.user_id.username} title={post.title} url={post.url} language={post.language} image={post.image} community={post.community} dateCreated={Math.ceil((Date.now() - (new Date(post.created_at)) ) / (1000 * 60 * 60)) + " hours ago"} likes={"0"} dislikes={"0"} comments={post.comment_id.length}/></Link>))
+                posts ? (
+                    posts && posts.map(post => (<Link to={`/feed/${post._id}`} key={post._id}><Post username={post.user_id.username} title={post.title} url={post.url} language={post.language} image={post.image} community={post.community} dateCreated={Math.ceil((Date.now() - (new Date(post.created_at)) ) / (1000 * 60 * 60)) + " hours ago"} likes={"0"} dislikes={"0"} comments={post.comment_id.length}/></Link>))
                 ) :
                     (
                         <div className="min-h-[50vh] w-full h-40 flex justify-middle align-middle">

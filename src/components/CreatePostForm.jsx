@@ -13,6 +13,8 @@ export default function CreatePostForm() {
     const [language, setLanguage] = useState('')
     const [community, setCommunity] = useState('')
     const [created, setCreated] = useState(false)
+    const [noAuth, setAuth] = useState(false)
+
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -39,10 +41,17 @@ export default function CreatePostForm() {
             setCreated(true)
             setTimeout(() => {
                 setCreated(false)
+                setTitle("")
+                setBody("")
+                setUrl("")
+                setLanguage("")
+                setCommunity("")
             }, 3000)
         }
         catch (error) {
             console.log(error)
+            setAuth(true)
+
         }
     }
 
@@ -191,6 +200,11 @@ export default function CreatePostForm() {
                 {
                     created && <div className="absolute  bottom-4 left-5  duration-300 ">
                         <p className="w-full pt-3 text-center my-auto text-white font-semi-bold bg-green-500 px-4 h-12 drop-shadow-[0_10px_10px_rgba(29,78,216,0.5)] shadow-blue-400 ">Post Created.</p>
+                    </div>
+                }
+                {
+                    noAuth && <div className="absolute  bottom-4 left-5  duration-300 ">
+                        <p className="w-full pt-3 text-center my-auto text-white font-semi-bold bg-red-500 px-4 h-12 drop-shadow-[0_10px_10px_rgba(29,78,216,0.5)] shadow-blue-400 ">Unsuccessful.</p>
                     </div>
                 }
             </div>
