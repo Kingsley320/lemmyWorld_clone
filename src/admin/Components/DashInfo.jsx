@@ -80,7 +80,7 @@ export default function DashInfo() {
                             ) :
                                 (
                                     <div className="min-h-[50vh] w-full h-40 flex justify-middle align-middle">
-                                        <h2 className="my-auto mx-auto text-3xl font-bold">Nothing yet...</h2>
+                                        <h2 className="my-auto mx-auto text-3xl font-bold animate-pulse">Nothing yet...</h2>
                                     </div>
                                 )
                         }

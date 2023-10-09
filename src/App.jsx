@@ -16,7 +16,7 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<HomePage/>}/>
+          <Route path="/" element={<PostsPage/>}/>
           <Route path="/signup" element={<SignUp/>}/>
           <Route path="/login" element={<Login/>}/>
           <Route path="/create-post" element={<CreatePost/>}/>
@@ -26,8 +26,7 @@ function App() {
           <Route path='/admin' element={<Dashboard/>}/>
         </Routes>
       </BrowserRouter>
-      
-      
+           
     </>
   )
 }

@@ -37,6 +37,9 @@ export default function CreatePostForm() {
             let resp = await axios.post("http://localhost:5001/api/v1/create-post", post)
             console.log(resp.data)
             setCreated(true)
+            setTimeout(() => {
+                setCreated(false)
+            }, 3000)
         }
         catch (error) {
             console.log(error)
@@ -179,12 +182,17 @@ export default function CreatePostForm() {
                     </div>
 
                     <div className="">
-                        <button type="submit" className={`bg-neutral-500 px-2 py-1 text-black rounded-md hover:bg-neutral-400/90 duration-300 ${url === '' || 
-                        // image === '' || 
-                        title === '' || body === '' || language === '' || community === '' ? 'pointer-events-none' : ''}`} onClick={handleSubmit}>Create</button>
+                        <button type="submit" className={`bg-neutral-500 px-2 py-1 text-black rounded-md hover:bg-neutral-400/90 duration-300 ${url === '' ||
+                            // image === '' || 
+                            title === '' || body === '' || language === '' || community === '' ? 'pointer-events-none' : ''}`} onClick={handleSubmit}>Create</button>
                     </div>
                     {/* <input type="submit" /> */}
                 </form>
+                {
+                    created && <div className="absolute  bottom-4 left-5  duration-300 ">
+                        <p className="w-full pt-3 text-center my-auto text-white font-semi-bold bg-green-500 px-4 h-12 drop-shadow-[0_10px_10px_rgba(29,78,216,0.5)] shadow-blue-400 ">Post Created.</p>
+                    </div>
+                }
             </div>
         </div>
 
